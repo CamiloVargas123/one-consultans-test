@@ -1,14 +1,23 @@
-import { Box, Button, Container, FormControl, FormErrorMessage, FormHelperText, FormLabel, Grid, GridItem, Heading, Input } from '@chakra-ui/react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, Button, Container, FormControl, FormErrorMessage, FormLabel, Grid, GridItem, Heading, Input } from '@chakra-ui/react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { DataPersonal } from 'src/models/dataPersonal.type'
+import { savePersonalData } from 'src/redux/slices/personalData'
 
 export default function DataPersonalForm() {
   const { register, handleSubmit, formState: { errors } } = useForm<DataPersonal>()
+  const [onError, setOnError] = useState(false)
   const dispatch = useDispatch()
-  
+
   async function onSubmit(data: DataPersonal) {
-    console.log("🚀 ~ file: DataPersonal.tsx ~ line 9 ~ onSubmit ~ data", data)
+    try {
+      // save in database
+      dispatch(savePersonalData(data))
+    } catch (error) {
+      console.error(error)
+      setOnError(true)
+    }
   }
 
   return (
@@ -65,9 +74,19 @@ export default function DataPersonalForm() {
           <GridItem colSpan={2} alignContent="end">
             <Button type="submit" w="100%">Guardar</Button>
           </GridItem>
+
+          {
+            onError &&
+            <GridItem colSpan={2}>
+              <Alert status='error'>
+                <AlertIcon />
+                <AlertTitle>Error!</AlertTitle>
+                <AlertDescription>nos se han podido guardar tus datos</AlertDescription>
+              </Alert>
+            </GridItem>
+          }
         </Grid>
       </Container>
-
     </Box>
   )
 }
