@@ -17,7 +17,7 @@ function App() {
           step === 3 && <Summary setStep={setStep} />
         }
         {
-          step === 4 && <TableRegister />
+          step === 4 && <TableRegister setStep={setStep} />
         }
       </Container>
     </Box>

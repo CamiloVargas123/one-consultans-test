@@ -95,6 +95,10 @@ export default function DataPersonalForm({ setStep, isRead }: Props) {
           </GridItem>
         }
       </Grid>
+      {
+        personalData.isSend && setStep &&
+        <Button w="100%" colorScheme={"green"} onClick={() => setStep(4)} mt={4}>Ir a la tabla de usuarios registrados</Button>
+      }
     </Box>
   )
 }

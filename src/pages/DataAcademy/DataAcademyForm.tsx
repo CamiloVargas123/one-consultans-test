@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { DataAcademy } from 'src/models/dataAcademic.type'
 import { saveAcademyData, selectAcademyData } from 'src/redux/slices/academyData'
+import { selectPersonalData } from 'src/redux/slices/personalData'
 
 interface Props {
   setStep?: Dispatch<SetStateAction<number>>
@@ -16,6 +17,7 @@ export default function DataAcademyForm({ setStep, isRead }: Props) {
   const [selectedEducation, setSelectedEducation] = useState<string>()
   const academyData = useSelector(selectAcademyData)
   const dispatch = useDispatch()
+  const personalData = useSelector(selectPersonalData)
 
   async function onSubmit(data: DataAcademy) {
     try {
@@ -119,6 +121,10 @@ export default function DataAcademyForm({ setStep, isRead }: Props) {
             </GridItem>
           }
         </Grid>
+        {
+          personalData.isSend && setStep &&
+          <Button w="100%" colorScheme={"green"} onClick={() => setStep(4)} mt={4}>Ir a la tabla de usuarios registrados</Button>
+        }
       </Container>
     </Box>
   )

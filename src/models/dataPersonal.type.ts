@@ -4,6 +4,7 @@ export interface DataPersonal {
   lastName?: string
   age?: number
   email?: string
+  isSend?: boolean
 }
 
 export const EmptyDataPerosnalState: DataPersonal = {
