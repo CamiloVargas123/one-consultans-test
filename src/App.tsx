@@ -1,6 +1,6 @@
-import { Box, Container, Text } from '@chakra-ui/react'
+import { Box, Container } from '@chakra-ui/react'
 import { useState } from 'react'
-import { DataAcademyForm, DataPersonalForm } from './pages'
+import { DataAcademyForm, DataPersonalForm, Summary } from './pages'
 
 function App() {
   const [step, setStep] = useState(1)
@@ -12,6 +12,9 @@ function App() {
         }
         {
           step === 2 && <DataAcademyForm setStep={setStep} />
+        }
+        {
+          step === 3 && <Summary setStep={setStep} />
         }
       </Container>
     </Box>
