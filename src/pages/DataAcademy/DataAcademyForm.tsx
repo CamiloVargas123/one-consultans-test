@@ -3,12 +3,13 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { DataAcademy } from 'src/models/dataAcademic.type'
-import { savePersonalData } from 'src/redux/slices/personalData'
+import { saveAcademyData } from 'src/redux/slices/academyData'
 
 interface Props {
-  setStep: Dispatch<SetStateAction<number>>
+  setStep?: Dispatch<SetStateAction<number>>
+  isRead?: boolean
 }
-export default function DataAcademyForm({ setStep }: Props) {
+export default function DataAcademyForm({ setStep, isRead }: Props) {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<DataAcademy>()
   const [onError, setOnError] = useState(false)
   const [selectedEducation, setSelectedEducation] = useState<string>()
@@ -17,8 +18,8 @@ export default function DataAcademyForm({ setStep }: Props) {
   async function onSubmit(data: DataAcademy) {
     try {
       // save in database
-      dispatch(savePersonalData(data))
-      setStep(e => e + 1)
+      dispatch(saveAcademyData(data))
+      if (setStep) setStep(e => e + 1)
     } catch (error) {
       console.error(error)
       setOnError(true)
@@ -30,7 +31,7 @@ export default function DataAcademyForm({ setStep }: Props) {
 
 
   return (
-    <Box as="form" onSubmit={handleSubmit(onSubmit)}>
+    <Box as="form" onSubmit={handleSubmit(onSubmit)} w="100%">
       <Container maxW={"container.md"} mt={10}>
         <Grid gridTemplateColumns={'repeat(2, 1fr'} gap={6}>
 
@@ -100,9 +101,12 @@ export default function DataAcademyForm({ setStep }: Props) {
 
 
 
-          <GridItem colSpan={2} alignContent="end">
-            <Button type="submit" w="100%">Siguiente</Button>
-          </GridItem>
+          {
+            !isRead &&
+            <GridItem colSpan={2} alignContent="end">
+              <Button type="submit" w="100%">Siguiente</Button>
+            </GridItem>
+          }
 
           {
             onError &&
