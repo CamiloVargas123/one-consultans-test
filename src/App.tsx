@@ -1,9 +1,10 @@
 import { Box, Text } from '@chakra-ui/react'
+import { DataPersonalForm } from './pages'
 
 function App() {
   return (
     <Box>
-      <Text>text example</Text>
+      <DataPersonalForm />
     </Box>
   )
 }
